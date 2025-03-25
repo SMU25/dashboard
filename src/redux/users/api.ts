@@ -1,5 +1,5 @@
-import { IUpdatedUserResponse, IUser, IUsersResponse } from "@/@types/users";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { IUpdatedUserResponse, IUser, IUsersResponse } from "@/@types/users";
 
 interface GetUsersParams {
   page?: number;
@@ -11,6 +11,7 @@ const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
   }),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     getUsers: builder.query<IUser[], GetUsersParams>({
       query: ({ page = 1, perPage = 12 }) =>
@@ -24,6 +25,7 @@ const usersApi = createApi({
         method: "PATCH",
         body: { name, job },
       }),
+      invalidatesTags: ["User"],
     }),
 
     deleteUser: builder.mutation<void, number>({
@@ -31,6 +33,7 @@ const usersApi = createApi({
         url: `/users/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["User"],
     }),
   }),
 });

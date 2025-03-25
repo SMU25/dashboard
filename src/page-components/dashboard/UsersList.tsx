@@ -12,8 +12,8 @@ export const UsersList: FC = () => {
   });
 
   return (
-    <section className="py-10">
-      <div className="container">
+    <section>
+      <div className="container py-10">
         <h3 className="text-xl font-semibold">Users List:</h3>
 
         <div className="mt-6">

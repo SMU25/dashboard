@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import { instance } from "@/services/api-client";

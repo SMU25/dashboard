@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
-import { Error } from "@/Error";
 import { Label } from "./Label";
+import { Error } from "../Error";
 
 interface Props {
   children: ReactNode;
