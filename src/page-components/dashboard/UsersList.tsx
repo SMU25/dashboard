@@ -11,6 +11,8 @@ export const UsersList: FC = () => {
     perPage: ITEMS_PER_PAGE,
   });
 
+  // console.log(data);
+
   return (
     <section>
       <div className="container py-10">

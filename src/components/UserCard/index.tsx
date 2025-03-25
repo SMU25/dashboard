@@ -15,9 +15,9 @@ export const UserCard: FC<IUser> = (props) => {
 
   const [isDeleted, setIsDeleted] = useState(false);
 
-  if (isDeleted) {
-    return null;
-  }
+  // if (isDeleted) {
+  //   return null;
+  // }
 
   return (
     <div className="flex items-center justify-between gap-2 p-2 rounded-xl shadow-dark-card">

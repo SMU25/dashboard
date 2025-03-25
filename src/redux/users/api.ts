@@ -17,6 +17,8 @@ const usersApi = createApi({
       query: ({ page = 1, perPage = 12 }) =>
         `/users?page=${page}&per_page=${perPage}`,
       transformResponse: (response: IUsersResponse) => response.data,
+      providesTags: (result) =>
+        result ? result.map((user) => ({ type: "User", id: user.id })) : [],
     }),
 
     updateUser: builder.mutation<IUser, IUpdatedUserResponse>({
@@ -25,7 +27,7 @@ const usersApi = createApi({
         method: "PATCH",
         body: { name, job },
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: (result, error, { id }) => [{ type: "User", id }],
     }),
 
     deleteUser: builder.mutation<void, number>({
@@ -33,7 +35,7 @@ const usersApi = createApi({
         url: `/users/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["User"],
+      invalidatesTags: (result, error, id) => [{ type: "User", id }],
     }),
   }),
 });

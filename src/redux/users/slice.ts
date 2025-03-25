@@ -15,31 +15,42 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addMatcher(
-        usersApi.endpoints.updateUser.matchFulfilled,
-        (state, { payload, meta }) => {
-          if (state?.users) {
-            const updatedUserIndex = state.users.findIndex(
-              (user) => user.id === meta.arg.id
-            );
+    builder.addMatcher(
+      usersApi.endpoints.getUsers.matchFulfilled,
+      (state, { payload }) => {
+        state.users = payload;
+      }
+    );
 
-            if (updatedUserIndex !== -1) {
-              const currentUser = state.users[updatedUserIndex];
+    builder.addMatcher(
+      usersApi.endpoints.updateUser.matchFulfilled,
+      (state, { payload, meta }) => {
+        if (state?.users) {
+          const updatedUserIndex = state.users.findIndex(
+            (user) => user.id === meta.arg.originalArgs.id
+          );
 
-              state.users[updatedUserIndex] = { ...currentUser, ...payload };
-            }
+          if (updatedUserIndex !== -1) {
+            const currentUser = state.users[updatedUserIndex];
+
+            state.users[updatedUserIndex] = { ...currentUser, ...payload };
           }
         }
-      )
-      .addMatcher(
-        usersApi.endpoints.deleteUser.matchFulfilled,
-        (state, { meta }) => {
-          if (state?.users) {
-            state.users = state.users.filter((user) => user.id !== meta.arg.id);
-          }
+      }
+    );
+
+    builder.addMatcher(
+      usersApi.endpoints.deleteUser.matchFulfilled,
+      (state, { meta }) => {
+        console.log(state, meta.arg);
+
+        if (state?.users) {
+          state.users = state.users.filter(
+            (user) => user.id !== meta.arg.originalArgs
+          );
         }
-      );
+      }
+    );
   },
 });
 
