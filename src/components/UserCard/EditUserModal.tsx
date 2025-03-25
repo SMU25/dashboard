@@ -1,5 +1,15 @@
 import React, { FC } from "react";
+import { IUser } from "@/@types/users";
+import { ModalWindow } from "../ModalWindow";
+import { IModal } from "../ModalWindow/types";
+import { EditUserForm } from "./EditUserForm";
 
-export const EditUserModal: FC = () => {
-  return <ModalWindow {...editUserPopup}>test</ModalWindow>;
-};
+interface Props extends IModal {
+  user: IUser;
+}
+
+export const EditUserModal: FC<Props> = ({ user, ...props }) => (
+  <ModalWindow {...props}>
+    <EditUserForm user={user} />
+  </ModalWindow>
+);

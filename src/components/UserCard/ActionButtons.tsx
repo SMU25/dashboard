@@ -17,16 +17,29 @@ const ConfirmationPopup = dynamic(
   { ssr: false }
 );
 
+const EditUserModal = dynamic(
+  () => import("./EditUserModal").then(({ EditUserModal }) => EditUserModal),
+  { ssr: false }
+);
+
 const DEFAULT_BUTTON_CLASSNAME = "w-10 h-10";
 
 const ICON_SIZE = 20;
 
-export const ActionButtons: FC<Pick<IUser, "id">> = ({ id }) => {
+interface Props {
+  user: IUser;
+  setIsDeleted: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const ActionButtons: FC<Props> = ({ user, setIsDeleted }) => {
   const editUserPopup = useModal();
   const deleteUserPopup = useModal();
 
   const [deleteUser] = useDeleteUserMutation();
-  const onDelete = () => deleteUser(id);
+  const onDelete = () => {
+    deleteUser(user.id);
+    setIsDeleted(true);
+  };
 
   return (
     <>
@@ -34,6 +47,7 @@ export const ActionButtons: FC<Pick<IUser, "id">> = ({ id }) => {
         <Button
           className={DEFAULT_BUTTON_CLASSNAME}
           variant={ButtonVariants.PRIMARY}
+          onClick={editUserPopup.onOpen}
         >
           <Image
             width={ICON_SIZE}
@@ -58,6 +72,14 @@ export const ActionButtons: FC<Pick<IUser, "id">> = ({ id }) => {
           />
         </Button>
       </div>
+
+      {editUserPopup.isOpen && (
+        <EditUserModal
+          {...editUserPopup}
+          user={user}
+          isActiveCloseClickOutside={false}
+        />
+      )}
 
       {deleteUserPopup.isOpen && (
         <ConfirmationPopup {...deleteUserPopup} onConfirm={onDelete} />

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { useState, FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { IUser } from "@/@types/users";
@@ -8,14 +8,16 @@ import { Avatar } from "../Avatar";
 
 const AT_ICON_SIZE = 18;
 
-export const UserCard: FC<IUser> = ({
-  id,
-  first_name,
-  last_name,
-  email,
-  avatar,
-}) => {
+export const UserCard: FC<IUser> = (props) => {
+  const { first_name, last_name, email, avatar } = props;
+
   const fullName = `${first_name} ${last_name}`;
+
+  const [isDeleted, setIsDeleted] = useState(false);
+
+  if (isDeleted) {
+    return null;
+  }
 
   return (
     <div className="flex items-center justify-between gap-2 p-2 rounded-xl shadow-dark-card">
@@ -46,7 +48,7 @@ export const UserCard: FC<IUser> = ({
         </div>
       </div>
 
-      <ActionButtons id={id} />
+      <ActionButtons user={props} setIsDeleted={setIsDeleted} />
     </div>
   );
 };

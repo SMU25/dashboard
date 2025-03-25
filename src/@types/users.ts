@@ -20,5 +20,5 @@ export interface IUsersResponse {
 
 export interface IUpdatedUserResponse extends Pick<IUser, "id"> {
   name: string;
-  job: string;
+  job?: string;
 }

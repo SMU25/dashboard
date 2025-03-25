@@ -16,7 +16,7 @@ export const Avatar: FC<Props> = ({
   altText = "",
 }) => (
   <Image
-    className={cn("object-cover rounded-full", className)}
+    className={cn("aspect-square object-cover rounded-full", className)}
     width={size}
     height={size}
     src={avatarUrl}
