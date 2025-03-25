@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+button,
+input {
+  outline: none;
+}
+
+a,
+button,
+button span,
+svg path {
+  @apply transition-all duration-200;
+}
+
+.container {
+  @apply max-w-360 w-full box-border mx-auto px-20;
+}

@@ -1,7 +1,13 @@
-import React from "react";
+import { PageLayout } from "@/components/Layouts/PageLayout";
+import { UsersList } from "@/page-components/dashboard/UsersList";
+import React, { FC } from "react";
 
-const Dashboard = () => {
-  return <div>Dashboard</div>;
+const Dashboard: FC = () => {
+  return (
+    <PageLayout>
+      <UsersList />
+    </PageLayout>
+  );
 };
 
 export default Dashboard;

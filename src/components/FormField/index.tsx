@@ -1,0 +1,27 @@
+import React, { FC, ReactNode } from "react";
+import { Error } from "@/Error";
+import { Label } from "./Label";
+
+interface Props {
+  children: ReactNode;
+  className?: string;
+  labelClassName?: string;
+  errorClassName?: string;
+  label?: ReactNode;
+  error?: ReactNode;
+}
+
+export const FormField: FC<Props> = ({
+  children,
+  className,
+  labelClassName,
+  errorClassName,
+  label,
+  error,
+}) => (
+  <div className={className}>
+    <Label className={labelClassName}>{label}</Label>
+    {children}
+    <Error className={errorClassName}> {error}</Error>
+  </div>
+);

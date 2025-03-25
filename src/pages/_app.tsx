@@ -1,5 +1,8 @@
 import type { AppProps } from "next/app";
 import { Montserrat } from "next/font/google";
+import { Provider as ReduxProvider } from "react-redux";
+import { ToastContainer, Bounce } from "react-toastify";
+import { store } from "@/redux/store";
 import "@/styles/index.css";
 
 const MAIN_FONT = Montserrat({
@@ -17,7 +20,23 @@ export default function App({ Component, pageProps }: AppProps) {
           font-weight: 400;
         }
       `}</style>
-      <Component {...pageProps} />
+
+      <ReduxProvider store={store}>
+        <Component {...pageProps} />
+        <ToastContainer
+          position="bottom-right"
+          theme="light"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          rtl={false}
+          transition={Bounce}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+      </ReduxProvider>
     </>
   );
 }
