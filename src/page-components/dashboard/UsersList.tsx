@@ -11,13 +11,10 @@ export const UsersList: FC = () => {
     perPage: ITEMS_PER_PAGE,
   });
 
-  // console.log(data);
-
   return (
     <section>
       <div className="container py-10">
         <h3 className="text-xl font-semibold">Users List:</h3>
-
         <div className="mt-6">
           {isLoading ? (
             <div>Loading...</div>

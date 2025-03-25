@@ -11,14 +11,16 @@ const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
   }),
-  tagTypes: ["User"],
+  tagTypes: ["Users"],
   endpoints: (builder) => ({
     getUsers: builder.query<IUser[], GetUsersParams>({
       query: ({ page = 1, perPage = 12 }) =>
         `/users?page=${page}&per_page=${perPage}`,
       transformResponse: (response: IUsersResponse) => response.data,
       providesTags: (result) =>
-        result ? result.map((user) => ({ type: "User", id: user.id })) : [],
+        result
+          ? result.map((user) => ({ type: "Users", id: user.id }))
+          : [{ type: "Users", id: "LIST" }],
     }),
 
     updateUser: builder.mutation<IUser, IUpdatedUserResponse>({
@@ -27,7 +29,7 @@ const usersApi = createApi({
         method: "PATCH",
         body: { name, job },
       }),
-      invalidatesTags: (result, error, { id }) => [{ type: "User", id }],
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
 
     deleteUser: builder.mutation<void, number>({
@@ -35,7 +37,7 @@ const usersApi = createApi({
         url: `/users/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (result, error, id) => [{ type: "User", id }],
+      invalidatesTags: [{ type: "Users", id: "LIST" }],
     }),
   }),
 });
