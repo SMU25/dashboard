@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { IUpdatedUserResponse, IUser, IUsersResponse } from "@/@types/users";
 
+const TAGS_LIST = [{ type: "Users", id: "LIST" }] as const;
+
 interface GetUsersParams {
   page?: number;
   perPage?: number;
@@ -20,7 +22,7 @@ const usersApi = createApi({
       providesTags: (result) =>
         result
           ? result.map((user) => ({ type: "Users", id: user.id }))
-          : [{ type: "Users", id: "LIST" }],
+          : TAGS_LIST,
     }),
 
     updateUser: builder.mutation<IUser, IUpdatedUserResponse>({
@@ -29,7 +31,7 @@ const usersApi = createApi({
         method: "PATCH",
         body: { name, job },
       }),
-      invalidatesTags: [{ type: "Users", id: "LIST" }],
+      invalidatesTags: TAGS_LIST,
     }),
 
     deleteUser: builder.mutation<void, number>({
@@ -37,7 +39,7 @@ const usersApi = createApi({
         url: `/users/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: [{ type: "Users", id: "LIST" }],
+      invalidatesTags: TAGS_LIST,
     }),
   }),
 });
